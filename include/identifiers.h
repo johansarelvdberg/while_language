@@ -12,13 +12,13 @@ enum class LexType {
 enum class Terminal {
 	undefined = 0,
 	eof = 1,
-	plus,
-	eo_statment,
-	minus,
-	times,
-	equal,
-	equal_assign,
-	less_equal,
+	plus_,
+	seq_,
+	minus_,
+	times_,
+	equal_,
+	equal_assign_,
+	less_equal_,
 	not_,
 	and_,
 	true_,
@@ -29,6 +29,14 @@ enum class Terminal {
 	else_,
 	do_,
 	var_,
-	while_
+	while_,
+	white_space_,
+	begin_,
+	end_,
+	call_,
+	par_,
+	protect_,
+	proc_,
+	is_
 
 };

@@ -1,10 +1,11 @@
 
-#include "lex_analise.h"
+#include "lex/lex_analise.h"
 #include <string>
 #include <iostream>
 #include <sstream> 
 #include <vector>
 #include <algorithm>
+#include<syntax/syntax.h>
 
 bool is_eof(std::expected<NextElement, Error> c) {
 	if (c) {
@@ -16,35 +17,13 @@ bool is_eof(std::expected<NextElement, Error> c) {
 	}
 	return false;
 }
+
 int main() {
 
 	std::vector<NextElement> lex_list;
-	std::string mystr("+-109; if ;qaswed;");
-	
+	std::string mystr("if false then var x := false else var x := false");
 	std::stringstream tmp(mystr);
-
-	GetChar next(tmp);
-
-
-	while (!next.eof()) {
-		auto c = next();
-		if (c) {
-			const auto& now = c.value();
-			lex_list.push_back(now);
-			//std::cout << now << " ";
-			if (now.lex == LexType::Terminal && now.terminal == Terminal::eof) {
-				break;
-			}
-		}
-		else {
-			//error handeling XXX
-			break;
-		}
-	}
-
-	for (const auto& i : lex_list) {
-		std::cout << i << " ";
-	}
-
+	GetElement next(tmp);
+	syntax::parse(next);
 	return 0;
 }
