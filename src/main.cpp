@@ -24,6 +24,6 @@ int main() {
 	std::string mystr("if false then var x := false else var x := false");
 	std::stringstream tmp(mystr);
 	GetElement next(tmp);
-	syntax::parse(next);
+	auto out = syntax::parse(next);
 	return 0;
 }

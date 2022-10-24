@@ -22,7 +22,7 @@ add_executable (CMakeTarget
 "src/syntax/predicates.cpp" 
 "src/syntax/expression.cpp" "include/syntax/structure.h"
 "src/syntax/structure.cpp"  
-"src/syntax/statement.cpp")
+"src/syntax/statement.cpp" "include/syntax/format.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 23)
