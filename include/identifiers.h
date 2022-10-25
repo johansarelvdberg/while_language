@@ -12,33 +12,32 @@ enum class LexType {
 enum class Terminal {
 	undefined = 0,
 	eof = 1,
-	plus_,
-	seq_,
-	minus_,
-	times_,
-	equal_,
-	equal_assign_,
-	less_equal_,
-	not_,
-	and_,
-	true_,
-	false_,
-	void_,
-	if_,
-	then_,
-	else_,
-	do_,
-	var_,
-	while_,
-	white_space_,
-	begin_,
-	end_,
-	call_,
-	par_,
-	protect_,
-	proc_,
-	is_
-
+	plus_ = 2,
+	seq_ = 3,
+	minus_ = 4,
+	times_ = 5,
+	equal_ = 6,
+	equal_assign_ = 7,
+	less_equal_ = 8,
+	not_ = 9,
+	true_ = 10,
+	false_ = 11,
+	void_ = 12,
+	if_ = 13,
+	then_ = 14,
+	else_ = 15,
+	do_ = 16,
+	var_ = 17,
+	while_ = 18,
+	white_space_ = 19,
+	begin_ = 20,
+	end_ = 21,
+	call_ = 22,
+	par_ = 23,
+	protect_ = 24,
+	proc_ = 25,
+	is_ = 26,
+	and_ = 27,
 };
 
 template <>
@@ -133,7 +132,7 @@ struct std::formatter<Terminal> : std::formatter<std::string> {
 			break;
 		case Terminal::times_:
 			str = "times";
-			break; 
+			break;
 		case Terminal::true_:
 			str = "true";
 			break;
@@ -149,8 +148,11 @@ struct std::formatter<Terminal> : std::formatter<std::string> {
 		case Terminal::undefined:
 			str = "undefined";
 			break;
+		case Terminal::white_space_:
+			str = "white_space";
+			break;
 		default:
-			str = "lex type format not defined";
+			str = "lex type format not defined: " + std::to_string((int)p);
 		}
 
 		return formatter<string>::format(str, ctx);
