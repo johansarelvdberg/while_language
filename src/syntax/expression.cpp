@@ -29,7 +29,7 @@ ExpOp to_exp_type(const NextElement& el) {
 	}
 }
 
-Expression::Expression(const Expression& data) : empty(0), type(data.type)
+Expression::Expression(const Expression& data) : SyntaxBase(false), empty(0), type(data.type)
 {
 	if (data.is_binary()) {
 		new (&binary) ExpressionBinary(data.binary);
@@ -84,11 +84,11 @@ bool syntax::Expression::is_binary() const
 	return type == ExpType::binary;
 }
 
-syntax::Expression::Expression(const ExpressionTerminal& data) : type(ExpType::terminal), terminal(data){}
+syntax::Expression::Expression(const ExpressionTerminal& data) : SyntaxBase(false), type(ExpType::terminal), terminal(data){}
 
-syntax::Expression::Expression(const ExpressionUnirary& data) : type(ExpType::uninary), uninary(data){}
+syntax::Expression::Expression(const ExpressionUnirary& data) : SyntaxBase(false), type(ExpType::uninary), uninary(data){}
 
-syntax::Expression::Expression(const ExpressionBinary& data) : type(ExpType::binary), binary(data){}
+syntax::Expression::Expression(const ExpressionBinary& data) : SyntaxBase(false), type(ExpType::binary), binary(data){}
 
 syntax::ExpressionTerminal::ExpressionTerminal(const NextElement& current_) : current(current_){}
 

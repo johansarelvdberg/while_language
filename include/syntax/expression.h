@@ -1,5 +1,7 @@
 #pragma once
 #include <lex/lex_analise.h>
+#include <syntax/syntax_base.h>
+
 
 namespace syntax {
 	enum class ExpOp {
@@ -25,6 +27,8 @@ namespace syntax {
 	public:
 		ExpressionTerminal(const NextElement& current);
 		const NextElement current;
+		const TypeOptions required;
+		Types computed;
 	};
 
 	class ExpressionUnirary {
@@ -42,7 +46,7 @@ namespace syntax {
 		const ExpOp op;
 	};
 
-	class Expression {
+	class Expression : public SyntaxBase {
 	public:
 		Expression() = delete;		
 		Expression(const Expression& data);

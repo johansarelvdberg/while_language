@@ -1,7 +1,7 @@
 #pragma once
 
 #include <lex/lex_analise.h>
-#include <error.h>
+
 
 template<typename T>
 concept LexGen = requires(T a)

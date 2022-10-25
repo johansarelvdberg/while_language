@@ -2,7 +2,7 @@
 Create a compiler for the while language
 
 
-User Ctest for some unit tests
+User Ctest for some unit tests.
 
 
 For now skip

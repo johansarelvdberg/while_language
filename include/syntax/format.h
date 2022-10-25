@@ -7,13 +7,13 @@
 template <typename Value>
 struct std::formatter<std::vector<Value>> : std::formatter<std::string> {
 	auto format(const std::vector<Value>& v, format_context& ctx) {
-		
+
 		auto&& out = ctx.out();
 		format_to(out, "[");
 		if (v.size() > 0)
 			format_to(out, "{}", v[0]);
 		for (int i = 1; i < v.size(); ++i)
-			format_to(out, ", {}" , v[i]);
+			format_to(out, ", {}", v[i]);
 		return format_to(out, "]");
 	}
 	// ...
@@ -65,7 +65,7 @@ template <>
 struct std::formatter<syntax::Statement> : std::formatter<std::string> {
 	auto format(syntax::Statement p, format_context& ctx) {
 		using namespace syntax;
-		std::string str = std::format("{{\"type\": {}, \"value\": ", p.op);
+		std::string str = std::format("{{\"type\": {}, ", p.op);
 		switch (p.op) {
 		case StatementOp::begin_:
 			str += std::format("{} }}", *p.block_statement);
@@ -107,8 +107,8 @@ struct std::formatter<syntax::StatementIf> : std::formatter<std::string> {
 	auto format(const syntax::StatementIf& p, format_context& ctx) {
 		using namespace syntax;
 		return 	std::formatter<std::string>::format(
-			std::format("{{\"type\": {}, \"condition\": {}, \"true_branch\": {}, \"false_branch\": {} }}",
-				StatementOp::if_, p.condition, p.true_branch, p.false_branch),
+			std::format("\"condition\": {}, \"true_branch\": {}, \"false_branch\": {} ",
+				p.condition, p.true_branch, p.false_branch),
 			ctx);
 	}
 };
@@ -119,7 +119,7 @@ struct std::formatter<syntax::StatementWhile> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"condition\": {}, \"body\": {} }}",
+				"\"condition\": {}, \"body\": {}",
 				StatementOp::while_, p.condition, p.body),
 			ctx);
 	}
@@ -131,7 +131,7 @@ struct std::formatter<syntax::StatementAssign> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"varialbe\": {}, \"expression\": {} }}",
+				"\"varialbe\": {}, \"expression\": {}",
 				StatementOp::assigment_, p.var_name, p.expression),
 			ctx);
 	}
@@ -143,8 +143,8 @@ struct std::formatter<syntax::StatementDecl> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"varialbe\": {}, \"expression\": {} }}",
-				StatementOp::var_, p.var_name, p.expression), ctx);
+				"\"varialbe\": {}, \"expression\": {}",
+				p.var_name, p.expression), ctx);
 	}
 };
 
@@ -155,8 +155,8 @@ struct std::formatter<syntax::StatementBlock> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"body\": {} }}",
-				StatementOp::begin_, p.statements), ctx);
+				"\"body\": {}",
+				p.statements), ctx);
 	}
 };
 
@@ -167,7 +167,7 @@ struct std::formatter<syntax::StatementProtect> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"body\": {} }}",
+				"\"body\": {}",
 				StatementOp::protected_, p.statements), ctx);
 	}
 };
@@ -178,8 +178,8 @@ struct std::formatter<syntax::StatementPar> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"body\": {} }}",
-				StatementOp::par_, p.statements), ctx);
+				"\"body\": {}",
+				p.statements), ctx);
 	}
 };
 
@@ -189,8 +189,8 @@ struct std::formatter<syntax::StatementSeq> : std::formatter<std::string> {
 		using namespace syntax;
 		return std::formatter<std::string>::format(
 			std::format(
-				"{{\"type\": {}, \"body\": {} }}",
-				StatementOp::par_, p.statements), ctx);
+				"\"body\": {}",
+				p.statements), ctx);
 	}
 };
 
@@ -216,7 +216,7 @@ enum class ExpOp {
 	equal_,
 	var_,
 	not_
-	};
+};
 #endif
 
 
@@ -276,7 +276,7 @@ struct std::formatter<syntax::ExpType> : std::formatter<std::string> {
 		case ExpType::binary:
 			return std::formatter<std::string>::format(std::string("binary"), ctx);
 			break;
-		}		
+		}
 	}
 };
 
@@ -290,13 +290,13 @@ struct std::formatter<syntax::Expression> : std::formatter<std::string> {
 	auto format(const syntax::Expression& p, format_context& ctx) {
 		using namespace syntax;
 		if (p.is_binary()) {
-			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"body\": {} }}", p.type, p.binary), ctx);
+			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"value\": {} }}", p.type, p.binary), ctx);
 		}
 		else if (p.is_terminal()) {
-			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"body\": {} }}", p.type, p.terminal), ctx);
+			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"value\": {} }}", p.type, p.terminal), ctx);
 		}
 		else if (p.is_uninrary()) {
-			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"body\": {} }}", p.type, p.uninary), ctx);
+			return std::formatter<std::string>::format(std::format("{{\"type\": {}, \"value\": {} }}", p.type, p.uninary), ctx);
 		}
 	}
 };

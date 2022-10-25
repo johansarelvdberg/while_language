@@ -2,7 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-#include <error.h>
+#include <error/error.h>
 #include <cctype>
 
 static const std::vector<std::pair<std::string, Terminal>> terminals_table = {

@@ -57,17 +57,17 @@ Statement Statement::create(Terminal syntax_id, const std::vector<Statement>& st
 	}
 }
 
-Statement::Statement(const NextElement& op_) {
+Statement::Statement(const NextElement& op_) : SyntaxBase(false) {
 	this->op = to_statement_op(op_);
 	init(this->op);
 }
 
-Statement::Statement(Terminal op_) {
+Statement::Statement(Terminal op_) : SyntaxBase(false) {
 	this->op = to_statement_op(op_);
 	init(this->op);
 }
 
-syntax::Statement::Statement(const Statement& other){
+syntax::Statement::Statement(const Statement& other) : SyntaxBase(false){
 	this->~Statement();
 	this->init(other.op);
 	switch (this->op) {

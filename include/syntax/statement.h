@@ -26,7 +26,7 @@ namespace syntax {
 		par_
 	};
 
-	class Statement {
+	class Statement : public SyntaxBase {
 	public:
 		Statement() = delete;
 

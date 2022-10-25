@@ -4,7 +4,7 @@
 #include <string>
 #include <identifiers.h>
 #include <expected>
-#include <error.h>
+#include <error/error.h>
 #include <ranges>
 #include <iterator>
 #include <lex/NextElement.h>

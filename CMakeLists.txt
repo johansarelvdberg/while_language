@@ -21,25 +21,14 @@ include_directories(
 
 add_library(OWN_LIB 
 "src/lex/lex_analise.cpp" 
-"include/error.h" 
-"include/identifiers.h" 
-"src/error.cpp"
-"include/syntax/syntax.h" 
-"include/concepts.h" 
-"include/lex/NextElement.h" 
+"src/error/error.cpp"
 "src/lex/NextElement.cpp" 
-"include/syntax/Node.h" 
-"include/syntax/statement.h" 
-"include/syntax/expression.h" 
-"include/syntax/predicates.h" 
 "src/syntax/syntax.cpp" 
 "src/syntax/predicates.cpp" 
 "src/syntax/expression.cpp" 
-"include/syntax/structure.h"
 "src/syntax/structure.cpp"  
 "src/syntax/statement.cpp" 
-"include/syntax/format.h" 
-)
+ "src/syntax/types.cpp")
 set_property(TARGET OWN_LIB PROPERTY CXX_STANDARD 23)
 
 
@@ -60,7 +49,12 @@ add_executable(test_if_basic "test/test_if_basic.cpp")
 target_link_libraries(test_if_basic PRIVATE OWN_LIB)
 set_property(TARGET test_if_basic PROPERTY CXX_STANDARD 23)
 
+add_executable(syntax_test_if_basic "test/syntax_test_if_basic.cpp")
+target_link_libraries(syntax_test_if_basic PRIVATE OWN_LIB)
+set_property(TARGET syntax_test_if_basic PROPERTY CXX_STANDARD 23)
+
 enable_testing()
 add_test(Test1 test_while_basic)
 add_test(Test2 test_if_basic)
+add_test(Test3 syntax_test_if_basic)
 

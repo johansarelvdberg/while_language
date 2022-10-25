@@ -8,13 +8,14 @@
 #include <syntax/structure.h>
 #include <syntax/statement.h>
 #include <assert.h>
+#include <syntax/types.h>
 
 
 namespace syntax {
 	Statement parse(GetElement& gen);
 
-	template<std::ranges::view View>
-	std::pair<Expression, View> prase_bool_expression(View view)
+	template<std::ranges::view View, Types type>
+	std::pair<Expression, View> prase_expression(View view)
 	{
 		auto current = view.begin();
 		if (get_arity(*current) == 1) {
@@ -56,7 +57,7 @@ namespace syntax {
 	std::pair< Statement, View> prase_statement(View view) {
 		if (start_of_if(view)) {
 			auto current = ++view.begin();
-			auto exp_view_begin = prase_bool_expression(std::ranges::subrange(current, view.end()));
+			auto exp_view_begin = prase_expression<View, Types::boolean>(std::ranges::subrange(current, view.end()));
 			current = exp_view_begin.second.begin();
 			if (*current != Terminal::then_) {
 				throw "error";
@@ -76,7 +77,7 @@ namespace syntax {
 		}
 		else if (start_of_while(view)) {
 			auto current = ++view.begin();
-			auto exp_view_begin = prase_bool_expression(std::ranges::subrange(current, view.end()));
+			auto exp_view_begin = prase_expression<View, Types::boolean>(std::ranges::subrange(current, view.end()));
 			current = exp_view_begin.second.begin();
 			if (*current != Terminal::do_) {
 				throw "error";
@@ -96,7 +97,7 @@ namespace syntax {
 				throw "error";
 			}
 			++new_begin;
-			auto exp_view_begin = prase_bool_expression(std::ranges::subrange(new_begin, view.end()));
+			auto exp_view_begin = prase_expression<View, Types::boolean>(std::ranges::subrange(new_begin, view.end()));
 			return std::make_pair(
 				Statement::create(*view.begin(), *var_name_itr, exp_view_begin.first),
 				exp_view_begin.second
@@ -111,7 +112,7 @@ namespace syntax {
 			}
 			auto new_begin = eql;
 			++new_begin;
-			auto exp_view_begin = prase_bool_expression(std::ranges::subrange(new_begin, view.end()));
+			auto exp_view_begin = prase_expression<View, Types::boolean>(std::ranges::subrange(new_begin, view.end()));
 			return std::make_pair(
 				Statement::create(*eql, *var_name_itr, exp_view_begin.first),
 				exp_view_begin.second
@@ -151,9 +152,6 @@ namespace syntax {
 
 	template<std::ranges::view View>
 	auto parse(View view){
-		for (const auto& el : view) {
-			std::cout << el << " ";
-		}
 		if (start_of_exp_or_bool(view)) {
 			throw "auto exp_view = prase_bool_expression(view)";
 		}
