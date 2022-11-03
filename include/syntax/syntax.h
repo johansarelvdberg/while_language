@@ -4,12 +4,13 @@
 #include <lex/lex_analise.h>
 #include <vector>
 #include <syntax/predicates.h>
-#include <syntax/expression.h>
+
 #include <syntax/structure.h>
 #include <syntax/statement.h>
 #include <assert.h>
 #include <syntax/types.h>
 
+import Syntax;
 
 namespace syntax {
 	Statement parse(GetElement& gen);

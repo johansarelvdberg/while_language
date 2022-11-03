@@ -10,6 +10,7 @@ project ("While Language")
 
 include_directories(
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/syntax
         ${PROJECT_SOURCE_DIR}/src
         ${PROJECT_SOURCE_DIR}/test
 )
@@ -22,13 +23,13 @@ include_directories(
 add_library(OWN_LIB 
 "src/lex/lex_analise.cpp" 
 "src/error/error.cpp"
-"src/lex/NextElement.cpp" 
+"src/lex/NextElement.cpp"
 "src/syntax/syntax.cpp" 
 "src/syntax/predicates.cpp" 
-"src/syntax/expression.cpp" 
 "src/syntax/structure.cpp"  
 "src/syntax/statement.cpp" 
- "src/syntax/types.cpp")
+"src/syntax/types.cpp" 
+"include/syntax/expression.ixx")
 set_property(TARGET OWN_LIB PROPERTY CXX_STANDARD 23)
 
 

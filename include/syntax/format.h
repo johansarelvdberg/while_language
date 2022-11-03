@@ -314,7 +314,7 @@ template <>
 struct std::formatter<syntax::ExpressionUnirary> : std::formatter<std::string> {
 	auto format(const syntax::ExpressionUnirary& p, format_context& ctx) {
 		using namespace syntax;
-		return std::formatter<std::string>::format(std::format("{{\"operation\": {}, \"data\": {} }}", p.op, p.current), ctx);
+		return std::formatter<std::string>::format(std::format("{{\"operation\": {}, \"data\": {} }}", p.op.value(), p.current), ctx);
 	}
 };
 
@@ -322,6 +322,6 @@ template <>
 struct std::formatter<syntax::ExpressionBinary> : std::formatter<std::string> {
 	auto format(const syntax::ExpressionBinary& p, format_context& ctx) {
 		using namespace syntax;
-		return std::formatter<std::string>::format(std::format("{{\"operation\": {}, \"left\": {}, \"right\": {} }}", p.op, p.left, p.right), ctx);
+		return std::formatter<std::string>::format(std::format("{{\"operation\": {}, \"left\": {}, \"right\": {} }}", p.op.value(), p.left, p.right), ctx);
 	}
 };

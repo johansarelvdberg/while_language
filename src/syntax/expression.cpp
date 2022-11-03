@@ -1,9 +1,60 @@
+
 #include <syntax/expression.h>
+#include <vector>
 
 using namespace syntax;
 
+struct BinaryTypeConvert{
+	const ExpOp op;
+	const Types left;
+	const Types right;
+	const Types result;
+	const bool comm;
+};
 
-ExpOp to_exp_type(const NextElement& el) {
+std::vector<BinaryTypeConvert> binaryTypeConvertList({
+	{ExpOp::and_, Types::boolean, Types::boolean, Types::boolean, true},
+	{ExpOp::equal_, Types::natural_number, Types::natural_number, Types::boolean, true},
+	{ExpOp::less_equal_, Types::natural_number, Types::natural_number, Types::boolean, true},
+	{ExpOp::plus_, Types::natural_number, Types::natural_number, Types::natural_number, true},
+	{ExpOp::minus_, Types::natural_number, Types::natural_number, Types::natural_number, true},
+	{ExpOp::times_, Types::natural_number, Types::natural_number, Types::natural_number, true},
+});
+
+Types getBinaryTypes(ExpOp op, Types tl, Types tr) {
+	for (const auto& el : binaryTypeConvertList) {
+		if (el.op == op) {
+			if (el.left == tl && el.right == tr) {
+				return el.result;
+			}
+			else if (el.comm && el.left == tr && el.right == tl) {
+				return el.result;
+			}
+		}
+	}
+	return Types::any;
+}
+
+
+Types getBinaryTypes(ExpOp op, const NextElement& l, const NextElement& r) {
+	auto tl = getType(l);
+	auto tr = getType(r);
+	return getBinaryTypes(op, tl, tr);
+}
+
+
+Types getTypes(const Expression& exp) {
+	switch (exp.type) {
+	case ExpType::terminal:
+		return exp.uninary.possible_types();
+	case ExpType::binary:
+		return exp.binary.possible_types();
+	default:
+		return Types::error;
+	}
+}
+
+std::expected<ExpOp, Error> to_exp_type(const NextElement& el) {
 	switch (el.lex)
 	{
 	case LexType::Terminal:
@@ -21,7 +72,7 @@ ExpOp to_exp_type(const NextElement& el) {
 		case Terminal::less_equal_:
 			return ExpOp::less_equal_;
 		default:
-			throw "error";
+			return std::unexpected(Error::cannot_convert<NextElement, ExpOp>(ErrorType::lex));
 		}
 		break;
 	default:
@@ -29,72 +80,53 @@ ExpOp to_exp_type(const NextElement& el) {
 	}
 }
 
-Expression::Expression(const Expression& data) : SyntaxBase(false), empty(0), type(data.type)
+
+
+
+
+
+Types syntax::ExpressionTerminal::possible_types() const
 {
-	if (data.is_binary()) {
-		new (&binary) ExpressionBinary(data.binary);
+	return  getType (this->current);
+}
+
+
+
+Types syntax::ExpressionUnirary::possible_types() const
+{
+	if (this->has_value()) {
+		switch (this->op.value()) {
+		case ExpOp::identity_:
+			return getType(this->current);
+		case ExpOp::not_: {
+			auto t = getType(this->current);
+			if (t == Types::boolean) {
+				return Types::boolean;
+			}
+			else {
+				return Types::error;
+			}
+		}
+		}
 	}
-	else if (data.is_terminal()) {
-		new (&binary) ExpressionTerminal(data.terminal);
-	}
-	else if (data.is_uninrary()) {
-		new (&binary) ExpressionUnirary(data.uninary);
-	}
+	return Types::error;
 }
 
-Expression syntax::Expression::create(const NextElement& el){
-	return Expression(ExpressionTerminal(el));
+bool syntax::ExpressionUnirary::has_value() const{
+	return this->op.has_value();
 }
-
-Expression syntax::Expression::create(const NextElement& op, const NextElement& par)
-{
-	return Expression(ExpressionUnirary(op, par));
-}
-
-Expression syntax::Expression::create(const NextElement& op, const NextElement& left, const NextElement& right)
-{
-	return Expression(ExpressionBinary(op, left, right));
-}
-
-syntax::Expression::~Expression()
-{
-	if (this->is_binary()) {
-		this->binary.~ExpressionBinary();
-	}
-	else if (this->is_terminal()) {
-		this->terminal.~ExpressionTerminal();
-	}
-	else {
-		this->uninary.~ExpressionUnirary();
-	}
-}
-
-bool syntax::Expression::is_terminal() const
-{
-	return type == ExpType::terminal;
-}
-
-bool syntax::Expression::is_uninrary() const
-{
-	return type == ExpType::uninary;
-}
-
-bool syntax::Expression::is_binary() const
-{
-	return type == ExpType::binary;
-}
-
-syntax::Expression::Expression(const ExpressionTerminal& data) : SyntaxBase(false), type(ExpType::terminal), terminal(data){}
-
-syntax::Expression::Expression(const ExpressionUnirary& data) : SyntaxBase(false), type(ExpType::uninary), uninary(data){}
-
-syntax::Expression::Expression(const ExpressionBinary& data) : SyntaxBase(false), type(ExpType::binary), binary(data){}
-
-syntax::ExpressionTerminal::ExpressionTerminal(const NextElement& current_) : current(current_){}
-
-syntax::ExpressionUnirary::ExpressionUnirary(const NextElement& op_name, const NextElement& current_) : 
-	op(to_exp_type(op_name)), current(current_){}
 
 syntax::ExpressionBinary::ExpressionBinary(const NextElement& op_name, const NextElement& left_, const NextElement& right_)
-	: op(to_exp_type(op_name)), left(left_), right(right_){}
+	
+
+Types syntax::ExpressionBinary::possible_types() const
+{
+	return getBinaryTypes(this->op, getType(this->left), getTypes(this->right));
+}
+
+bool syntax::ExpressionBinary::has_value() const
+{
+	return this->op.has_value();
+}
+
 

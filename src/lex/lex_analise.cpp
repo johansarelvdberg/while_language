@@ -25,7 +25,10 @@ static const std::vector<std::pair<std::string, Terminal>> terminals_table = {
 	{"call", Terminal::call_},
 	{"protect", Terminal::protect_},
 	{"proc", Terminal::proc_},
-	{"is", Terminal::is_}
+	{"is", Terminal::is_},
+	{"[", Terminal::left_annotate_},
+	{"]", Terminal::right_annotate_},
+	{"fnc", Terminal::fence}
 };
 
 
@@ -88,11 +91,11 @@ GetElement::Next GetElement::operator()()
 }
 
 NextElement GetElement::next() {
-	char current = *reader;
-	++reader;
 	if (reader.eof()) {
 		return NextElement(LexType::Terminal, Terminal::eof);
 	}
+	char current = *reader;
+	++reader;	
 	switch (current) {
 	case ' ':
 		return NextElement(LexType::Terminal, Terminal::white_space_);
@@ -130,11 +133,14 @@ bool GetElement::eof() {
 Number GetElement::read_number(char current)
 {
 	std::string ret;
-	ret += current;
-	char c = *reader;
+	//ret += current;
+	char c = current;
 	while (is_digit(c)) {
 		ret += c;
 		++reader;
+		if (reader.eof()) {
+			break;
+		}
 		c = *reader;
 	}
 	return Number(ret);

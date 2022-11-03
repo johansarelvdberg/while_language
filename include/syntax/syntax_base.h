@@ -3,9 +3,10 @@
  namespace syntax {
 	class SyntaxBase {
 	public:
-		SyntaxBase() = delete;
-		SyntaxBase(bool err) : error(err) {};
-		inline bool operator()()const { return !error; }
-		const bool error;
+		SyntaxBase() { error = false; }		
+		inline bool operator()()const { return !contain_error(); }
+		bool contain_error()const {return error; }
+	protected:
+		bool error;
 	};
 }

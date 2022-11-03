@@ -1,20 +1,18 @@
 #pragma once
 
 #include <set>
+#include <lex/NextElement.h>
 
 namespace syntax {
 	enum class Types {
 		boolean,
 		natural_number,
-		undefined,
-		any
+		any,
+		error
 	};
 
-	class TypeOptions {
-	public:
-		TypeOptions();
-		TypeOptions(std::initializer_list<Types> data);
+	Types getType(const NextElement& el);
 
-		const std::set<Types> options;
-	};
+	bool operator < (Types l, Types r);
+	bool operator <= (Types l, Types r);
 }

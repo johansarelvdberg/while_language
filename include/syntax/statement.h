@@ -1,7 +1,9 @@
 #pragma once
-#include <syntax/expression.h>
+
 #include <memory>
 #include <vector>
+
+import Syntax;
 
 namespace syntax {
 	class Statement;

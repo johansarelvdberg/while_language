@@ -38,6 +38,9 @@ enum class Terminal {
 	proc_ = 25,
 	is_ = 26,
 	and_ = 27,
+	left_annotate_ = 28,
+	right_annotate_ = 29,
+	fence = 30
 };
 
 template <>
@@ -150,6 +153,15 @@ struct std::formatter<Terminal> : std::formatter<std::string> {
 			break;
 		case Terminal::white_space_:
 			str = "white_space";
+			break;
+		case Terminal::right_annotate_:
+			str = "end_annotate";
+			break;
+		case Terminal::left_annotate_:
+			str = "begin_annotate";
+			break;
+		case Terminal::fence:
+			str = "fence";
 			break;
 		default:
 			str = "lex type format not defined: " + std::to_string((int)p);
