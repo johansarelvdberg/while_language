@@ -129,19 +129,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\syntax\error.ixx" />
     <ClCompile Include="include\syntax\expression.ixx" />
-    <ClCompile Include="include\syntax\variable.ixx" />
+    <ClCompile Include="include\syntax\format.ixx" />
+    <ClCompile Include="include\syntax\parse.ixx" />
+    <ClCompile Include="include\syntax\statement.ixx" />
+    <ClCompile Include="include\syntax\syntax.ixx" />
+    <ClCompile Include="src\lex\lex_analise.cpp" />
+    <ClCompile Include="src\lex\NextElement.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\syntax\predicates.cpp" />
+    <ClCompile Include="src\syntax\structure.cpp" />
+    <ClCompile Include="src\syntax\types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lex\lex_analise.h" />
     <ClInclude Include="include\lex\NextElement.h" />
-    <ClInclude Include="include\syntax\format.h" />
     <ClInclude Include="include\syntax\Node.h" />
     <ClInclude Include="include\syntax\predicates.h" />
-    <ClInclude Include="include\syntax\statement.h" />
     <ClInclude Include="include\syntax\structure.h" />
-    <ClInclude Include="include\syntax\syntax.h" />
     <ClInclude Include="include\syntax\syntax_base.h" />
     <ClInclude Include="include\syntax\types.h" />
   </ItemGroup>

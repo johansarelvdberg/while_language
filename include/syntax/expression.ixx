@@ -1,6 +1,6 @@
-#pragma once
 
-export module Syntax;
+export module Syntax : Expression;
+
 
 import <lex/lex_analise.h>;
 import <syntax/syntax_base.h>;
@@ -8,11 +8,24 @@ import <memory>;
 import <vector>;
 
 
+
+
+
+namespace syntax {
+	export class Variable {
+	public:
+		Variable() = delete;
+		Variable(std::string v) : name(std::move(v)) {}
+		const std::string name;
+	};
+}
+
+
 namespace syntax {
 
 	class Expression;
 
-	enum class ExpOp {
+	export enum class ExpOp {
 		identity_,
 		true_,
 		plus_,

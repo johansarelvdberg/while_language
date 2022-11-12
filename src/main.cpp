@@ -5,7 +5,9 @@
 #include <sstream> 
 #include <vector>
 #include <algorithm>
-#include<syntax/syntax.h>
+
+
+import Syntax;
 
 bool is_eof(std::expected<NextElement, Error> c) {
 	if (c) {

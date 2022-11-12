@@ -19,6 +19,12 @@
     <Filter Include="Header Files\lex">
       <UniqueIdentifier>{4ad2334d-28de-4ad5-9edd-892c38d43771}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\lex">
+      <UniqueIdentifier>{b312ce32-7c8d-4beb-9127-cfa65881e2f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\syntax">
+      <UniqueIdentifier>{4a6fd44b-b998-483d-8dfb-8f708d9b279f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\syntax\expression.ixx">
@@ -27,15 +33,39 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\syntax\variable.ixx">
+    <ClCompile Include="include\syntax\syntax.ixx">
+      <Filter>Header Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="include\syntax\format.ixx">
+      <Filter>Header Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="include\syntax\statement.ixx">
+      <Filter>Header Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="include\syntax\parse.ixx">
+      <Filter>Header Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lex\lex_analise.cpp">
+      <Filter>Source Files\lex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lex\NextElement.cpp">
+      <Filter>Source Files\lex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\syntax\predicates.cpp">
+      <Filter>Source Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\syntax\structure.cpp">
+      <Filter>Source Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="src\syntax\types.cpp">
+      <Filter>Source Files\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="include\syntax\error.ixx">
       <Filter>Header Files\syntax</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\syntax\types.h">
-      <Filter>Header Files\syntax</Filter>
-    </ClInclude>
-    <ClInclude Include="include\syntax\format.h">
       <Filter>Header Files\syntax</Filter>
     </ClInclude>
     <ClInclude Include="include\syntax\Node.h">
@@ -44,13 +74,7 @@
     <ClInclude Include="include\syntax\predicates.h">
       <Filter>Header Files\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="include\syntax\statement.h">
-      <Filter>Header Files\syntax</Filter>
-    </ClInclude>
     <ClInclude Include="include\syntax\structure.h">
-      <Filter>Header Files\syntax</Filter>
-    </ClInclude>
-    <ClInclude Include="include\syntax\syntax.h">
       <Filter>Header Files\syntax</Filter>
     </ClInclude>
     <ClInclude Include="include\syntax\syntax_base.h">

@@ -39,8 +39,8 @@ constexpr std::int32_t mystoi(std::string_view str, std::size_t* pos = nullptr) 
 
 class Number {
 public:
-	constexpr Number(const std::string& str) : num(mystoi(str)) {};
-	const size_t num;
+	Number(const std::string& str) : num(mystoi(str)) {};
+	size_t num;
 };
 
 class NextElement {
@@ -54,13 +54,13 @@ public:
 
 	friend bool operator == (const NextElement& left, Terminal right);
 	friend bool operator != (const NextElement& left, Terminal right);
-	const LexType lex;
-	const union {
+	LexType lex;
+	union {
 		Terminal terminal;
 		Number number;
 		std::string variable;
 	};
-	//NextElement& operator = (const NextElement& other);
+	NextElement& operator = (const NextElement& other);
 };
 
 
