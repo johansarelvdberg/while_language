@@ -33,3 +33,7 @@
 
 /deps/boost
 /out
+/while_language/.vs/while_language
+/.vs
+/x64/Debug
+/vc140.pdb

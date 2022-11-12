@@ -130,8 +130,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\syntax\expression.ixx" />
+    <ClCompile Include="include\syntax\variable.ixx" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\lex\lex_analise.h" />
+    <ClInclude Include="include\lex\NextElement.h" />
+    <ClInclude Include="include\syntax\format.h" />
+    <ClInclude Include="include\syntax\Node.h" />
+    <ClInclude Include="include\syntax\predicates.h" />
+    <ClInclude Include="include\syntax\statement.h" />
+    <ClInclude Include="include\syntax\structure.h" />
+    <ClInclude Include="include\syntax\syntax.h" />
+    <ClInclude Include="include\syntax\syntax_base.h" />
     <ClInclude Include="include\syntax\types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

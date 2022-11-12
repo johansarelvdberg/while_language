@@ -48,21 +48,33 @@ namespace syntax {
 			return 1;
 			break;
 		}
+		return 0;
 	}
 
 	
+	class ExpressionTerminal;
 
 	export class Expression : public SyntaxBase {
 	public:
 		Expression() = delete;
-		
-	
-		const size_t arity;
+		Expression(ExpOp op_) :op(op_) {}
+		const ExpOp op;
 		std::vector<Expression> parameters;
 
-	protected:
-		
-
-		
+		static ExpressionTerminal create_ternimal(const NextElement& v);
 	};
+
+	class ExpressionTerminal : Expression {
+	public:
+		const NextElement value;
+		friend Expression;
+	protected:
+		ExpressionTerminal(const NextElement& v) : Expression(ExpOp::identity_), value(v) {}
+	};
+
+
+	ExpressionTerminal Expression::create_ternimal(const NextElement& v)
+	{
+		return ExpressionTerminal(v);
+	}
 }

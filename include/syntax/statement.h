@@ -28,7 +28,7 @@ namespace syntax {
 		par_
 	};
 
-	class Statement : public SyntaxBase {
+	class Statement  {
 	public:
 		Statement() = delete;
 
@@ -89,7 +89,7 @@ namespace syntax {
 		StatementAssign() = delete;
 		StatementAssign(const NextElement& cond, const Expression& body);
 
-		const ExpressionTerminal var_name;
+		const Variable var_name;
 		const Expression expression;
 	};
 
@@ -98,7 +98,7 @@ namespace syntax {
 		StatementDecl() = delete;
 		StatementDecl(const NextElement& var, const Expression& body);
 
-		const ExpressionTerminal var_name;
+		const Variable var_name;
 		const Expression expression;
 	};
 
