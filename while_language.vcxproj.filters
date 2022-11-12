@@ -25,6 +25,9 @@
     <Filter Include="Source Files\syntax">
       <UniqueIdentifier>{4a6fd44b-b998-483d-8dfb-8f708d9b279f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\error">
+      <UniqueIdentifier>{36703789-dd29-4b4b-b31d-b3d87f64293a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\syntax\expression.ixx">
@@ -60,8 +63,14 @@
     <ClCompile Include="src\syntax\types.cpp">
       <Filter>Source Files\syntax</Filter>
     </ClCompile>
-    <ClCompile Include="include\syntax\error.ixx">
-      <Filter>Header Files\syntax</Filter>
+    <ClCompile Include="error.ixx">
+      <Filter>Header Files\error</Filter>
+    </ClCompile>
+    <ClCompile Include="analise.ixx">
+      <Filter>Header Files\lex</Filter>
+    </ClCompile>
+    <ClCompile Include="lex.ixx">
+      <Filter>Header Files\lex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +88,6 @@
     </ClInclude>
     <ClInclude Include="include\syntax\syntax_base.h">
       <Filter>Header Files\syntax</Filter>
-    </ClInclude>
-    <ClInclude Include="include\lex\lex_analise.h">
-      <Filter>Header Files\lex</Filter>
     </ClInclude>
     <ClInclude Include="include\lex\NextElement.h">
       <Filter>Header Files\lex</Filter>

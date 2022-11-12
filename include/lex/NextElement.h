@@ -85,6 +85,8 @@ struct std::formatter<NextElement> : std::formatter<std::string> {
 		case LexType::TokenVariable:
 			return formatter<string>::format(std::format("{{ \"type\": {}, \"value\": {} }}", p.lex, p.variable), ctx);
 			break;
+		default:
+			return formatter<string>::format("error", ctx);
 		}
 	}
 };

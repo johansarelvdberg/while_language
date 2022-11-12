@@ -12,11 +12,24 @@ import <vector>;
 
 
 namespace syntax {
+	class Variable;
+	export typedef std::expected<Variable, Error> VariableError;
+
 	export class Variable {
-	public:
-		Variable() = delete;
-		Variable(std::string v) : name(std::move(v)) {}
+	public:	
+		static VariableError create(const NextElement& v) {
+			switch (v.lex) {
+			default:
+				return std::unexpected(Error());
+			case LexType::TokenVariable:
+				return std::expected<Variable, Error>(Variable(v.variable));
+			}
+		};
 		const std::string name;
+	protected:
+		Variable() =default;
+		Variable(const std::string& v) : name(v) {}
+		Variable(std::string&& v) : name(std::move(v)) {}
 	};
 }
 
